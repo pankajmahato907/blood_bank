@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 const Contact = () => {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
+      
       <section className="relative py-20 bg-red-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -17,11 +17,11 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Information */}
+      
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Contact Form */}
+         
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
               <form className="space-y-6">
@@ -74,7 +74,7 @@ const Contact = () => {
               </form>
             </div>
 
-            {/* Contact Information */}
+        
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
               <div className="space-y-6">
@@ -82,16 +82,16 @@ const Contact = () => {
                   <Phone className="h-6 w-6 text-red-600 mt-1" />
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-900">Phone</h3>
-                    <p className="mt-1 text-gray-600">+1 234 567 8900</p>
-                    <p className="text-gray-600">+1 234 567 8901</p>
+                    <p className="mt-1 text-gray-600">+041560068</p>
+                    <p className="text-gray-600">98153734783</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Mail className="h-6 w-6 text-red-600 mt-1" />
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-900">Email</h3>
-                    <p className="mt-1 text-gray-600">info@bloodbank.com</p>
-                    <p className="text-gray-600">support@bloodbank.com</p>
+                    <p className="mt-1 text-gray-600">info@digitalbloodbank.com</p>
+                    <p className="text-gray-600">support@digitalbloodbank.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -99,9 +99,9 @@ const Contact = () => {
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-900">Address</h3>
                     <p className="mt-1 text-gray-600">
-                      123 Main Street<br />
-                      Suite 456<br />
-                      City, State 12345
+                      Koteshwor<br />
+                      Mahadevstan<br />
+                      Kathmandu , Nepal
                     </p>
                   </div>
                 </div>
@@ -110,9 +110,9 @@ const Contact = () => {
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-900">Hours</h3>
                     <p className="mt-1 text-gray-600">
-                      Monday - Friday: 8:00 AM - 8:00 PM<br />
+                      Sunday - Friday: 8:00 AM - 8:00 PM<br />
                       Saturday: 9:00 AM - 5:00 PM<br />
-                      Sunday: Closed
+                      
                     </p>
                   </div>
                 </div>

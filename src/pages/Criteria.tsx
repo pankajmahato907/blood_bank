@@ -1,128 +1,48 @@
 import React from 'react';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 const Criteria = () => {
   return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-red-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">Donation Criteria & Facts</h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Learn about blood donation eligibility and important facts about blood donation.
-            </p>
-          </div>
-        </div>
+    <div className="bg-gray-100 min-h-screen py-10">
+      <section className="bg-red-600 text-white py-12 text-center shadow-md">
+        <h1 className="text-4xl font-bold">Donation Criteria & Facts</h1>
+        <p className="text-lg mt-2">Learn about blood donation eligibility and important facts about blood donation.</p>
       </section>
 
-      {/* Eligibility Criteria */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Eligibility Criteria</h2>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Age</h3>
-                    <p className="text-gray-600">Must be between 18-65 years old</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Weight</h3>
-                    <p className="text-gray-600">Minimum 50kg (110 lbs)</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Health</h3>
-                    <p className="text-gray-600">Generally good health condition</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Hemoglobin Level</h3>
-                    <p className="text-gray-600">Minimum 12.5g/dl</p>
-                  </div>
-                </div>
-              </div>
+      <section className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-red-600 border-b-2 pb-2">Eligibility Criteria</h2>
+        <ul className="mt-4 space-y-3 text-gray-700">
+          <li><strong>Age:</strong> Must be between 18-65 years old</li>
+          <li><strong>Weight:</strong> Minimum 50kg (110 lbs)</li>
+          <li><strong>Health:</strong> Generally good health condition, free from chronic diseases</li>
+          <li><strong>Hemoglobin Level:</strong> Minimum 12.5g/dl</li>
+          <li><strong>Blood Pressure:</strong> Should be within a normal range (not too high or too low)</li>
+          <li><strong>Recent Vaccination:</strong> Wait at least 2 weeks after receiving a vaccine</li>
+          <li><strong>Medication:</strong> Some medications may temporarily disqualify donation; consult a doctor</li>
+        </ul>
+      </section>
 
-              <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-6">Temporary Deferrals</h2>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <XCircle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Recent Surgery</h3>
-                    <p className="text-gray-600">Wait 6 months after major surgery</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <XCircle className="h-6 w-6 text-red-500 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Pregnancy</h3>
-                    <p className="text-gray-600">Wait 6 months after giving birth</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <section className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-red-600 border-b-2 pb-2">Temporary Deferrals</h2>
+        <ul className="mt-4 space-y-3 text-gray-700">
+          <li><strong>Recent Surgery:</strong> Wait 6 months after major surgery</li>
+          <li><strong>Pregnancy:</strong> Wait 6 months after giving birth</li>
+          <li><strong>Tattoo/Piercing:</strong> Wait at least 6 months before donating</li>
+          <li><strong>Infections:</strong> Must be free from cold, flu, or other infections for at least 2 weeks</li>
+          <li><strong>Travel History:</strong> If you have traveled to malaria-risk areas, you may need to wait before donating</li>
+        </ul>
+      </section>
 
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Important Facts</h2>
-              <div className="space-y-6">
-                <div className="bg-red-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <AlertCircle className="h-6 w-6 text-red-600" />
-                    <h3 className="ml-2 text-lg font-medium text-gray-900">Blood Types</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    There are 8 different blood types: A+, A-, B+, B-, O+, O-, AB+, and AB-. 
-                    O- is the universal donor, while AB+ is the universal recipient.
-                  </p>
-                </div>
-
-                <div className="bg-red-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <AlertCircle className="h-6 w-6 text-red-600" />
-                    <h3 className="ml-2 text-lg font-medium text-gray-900">Donation Frequency</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    You can donate whole blood every 56 days, up to 6 times a year. 
-                    Platelet donors can give every 7 days, up to 24 times a year.
-                  </p>
-                </div>
-
-                <div className="bg-red-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <AlertCircle className="h-6 w-6 text-red-600" />
-                    <h3 className="ml-2 text-lg font-medium text-gray-900">Blood Components</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    One blood donation can be separated into red cells, platelets, and plasma, 
-                    potentially helping up to three different patients.
-                  </p>
-                </div>
-
-                <div className="bg-red-50 p-6 rounded-lg">
-                  <div className="flex items-center mb-4">
-                    <AlertCircle className="h-6 w-6 text-red-600" />
-                    <h3 className="ml-2 text-lg font-medium text-gray-900">Donation Process</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    The actual blood donation typically takes about 8-10 minutes. 
-                    The entire process, from registration to post-donation refreshments, 
-                    takes about one hour.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-red-600 border-b-2 pb-2">Important Facts</h2>
+        <ul className="mt-4 space-y-3 text-gray-700">
+          <li><strong>Blood Types:</strong> There are 8 different blood types. O- is the universal donor, while AB+ is the universal recipient.</li>
+          <li><strong>Donation Frequency:</strong> Whole blood can be donated every 56 days, while platelets can be donated every 7 days.</li>
+          <li><strong>Blood Components:</strong> One donation can help up to three different patients by separating red cells, platelets, and plasma.</li>
+          <li><strong>Donation Process:</strong> The actual blood donation takes about 8-10 minutes, while the entire process takes about an hour.</li>
+          <li><strong>Uses of Donated Blood:</strong> Blood is used for trauma patients, surgeries, cancer treatments, and chronic conditions like anemia.</li>
+          <li><strong>Safe Donation:</strong> Sterile, single-use needles are used for each donor, ensuring complete safety.</li>
+          <li><strong>Hydration & Nutrition:</strong> Donors are encouraged to eat a healthy meal and drink plenty of water before donating.</li>
+        </ul>
       </section>
     </div>
   );

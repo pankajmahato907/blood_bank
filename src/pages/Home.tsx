@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div>
-      {/* Hero Section */}
       <section className="relative h-[600px]">
         <div className="absolute inset-0">
           <img
@@ -17,7 +16,7 @@ const Home = () => {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
           <div className="text-white">
-            <h1 className="text-5xl font-bold mb-6">Give the Gift of Life</h1>
+            <h1 className="text-5xl font-bold mb-6">Hello everyone, Give the Gift of Life</h1>
             <p className="text-xl mb-8 max-w-2xl">
               Your blood donation can save up to three lives. Join our mission to ensure
               every patient has access to safe, life-saving blood products.
@@ -33,33 +32,32 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+     
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <Users className="h-12 w-12 text-red-600 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">10,000+</h3>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">1</h3>
               <p className="text-gray-600">Donors Registered</p>
             </div>
             <div className="text-center">
               <Heart className="h-12 w-12 text-red-600 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">15,000+</h3>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">1+</h3>
               <p className="text-gray-600">Lives Saved</p>
             </div>
             <div className="text-center">
               <Award className="h-12 w-12 text-red-600 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">50+</h3>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">10+</h3>
               <p className="text-gray-600">Collection Centers</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Blood Bank Locations */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Blood Bank Locations</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Here are the available Blood Bank Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[...Array(9)].map((_, i) => (
               <div key={i} className="bg-red-900/90 p-6 rounded-lg text-white">
@@ -80,11 +78,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+     
       <section className="bg-red-600 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-8">
-            Ready to Make a Difference?
+            Soo Guys ,Are You Ready to Make a Difference? then 
           </h2>
           <div className="space-x-4">
             <Link
