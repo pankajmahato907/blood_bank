@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 const Contact = () => {

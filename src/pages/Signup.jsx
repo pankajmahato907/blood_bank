@@ -12,7 +12,7 @@ const Signup = () => {
     confirmPassword: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle signup logic here
     const sendData = async () => {
@@ -28,7 +28,7 @@ const Signup = () => {
     sendData();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
