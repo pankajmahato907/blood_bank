@@ -10,20 +10,27 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'donor', // default role
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle signup logic here
+
+    // Basic password confirmation check
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
     const sendData = async () => {
       try {
         const response = await axios.post('http://localhost:3000/signup', formData);
-    
         console.log('Response:', response.data);
       } catch (error) {
         console.error('Error sending data:', error);
       }
     };
+
     console.log('Signup attempt with:', formData);
     sendData();
   };
@@ -68,7 +75,7 @@ const Signup = () => {
                     required
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
               </div>
@@ -85,9 +92,28 @@ const Signup = () => {
                     required
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
+              </div>
+            </div>
+
+            {/* Role selection */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                Register as
+              </label>
+              <div className="mt-1">
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+                >
+                  <option value="donor">Donor</option>
+                  <option value="patient">Patient</option>
+                </select>
               </div>
             </div>
 
@@ -104,7 +130,7 @@ const Signup = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
                 />
               </div>
             </div>
@@ -121,7 +147,7 @@ const Signup = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
                 />
               </div>
             </div>
@@ -138,7 +164,7 @@ const Signup = () => {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
                 />
               </div>
             </div>

@@ -1,35 +1,47 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const navigate=useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3000/login', {
+        email,
+        password
+      });
+   
+      console.log('Response:', response.data);
+      localStorage.setItem("role", response.data.user.role);
+      setMessage(response.data.message);  // Display success message
+      if(response.data.user.role === "admin"){
+        navigate("/admin")
+      }
+      if(response.data.role){
+        navigate("/")
+      }
+     
+      setError(''); // Clear any previous error message
+    } catch (error) {
+      console.error('Error sending data:', error);
+      setError(error.response ? error.response.data.message : 'Something went wrong');
+      setMessage(''); // Clear any previous success message
+    }
     
 
-const sendData = async () => {
-  try {
-    const response = await axios.post('http://localhost:3000/Login', {
-    email ,
-    password
-    });
-
-    console.log('Response:', response.data);
-  } catch (error) {
-    console.error('Error sending data:', error);
-  }
-};
-
-sendData();
-    console.log('Login attempt with:', { email, password });
   };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      {console.log(message)}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <Heart className="h-12 w-12 text-red-600" />
@@ -113,6 +125,10 @@ sendData();
               </button>
             </div>
           </form>
+
+          {/* Display Messages */}
+          {message && <div className="text-green-500 text-center mt-4">{message}</div>}
+          {error && <div className="text-red-500 text-center mt-4">{error}</div>}
         </div>
       </div>
     </div>

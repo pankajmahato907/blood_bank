@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div>
+    <>
+        <div>
       <section className="relative h-[600px]">
         <div className="absolute inset-0">
           <img
@@ -101,6 +102,8 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </>
+
   );
 };
 
