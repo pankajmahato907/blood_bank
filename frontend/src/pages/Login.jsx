@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,30 +18,35 @@ const Login = () => {
         email,
         password
       });
-   
+
+      const role = response.data.user.role;
+
       console.log('Response:', response.data);
-      localStorage.setItem("role", response.data.user.role);
-      setMessage(response.data.message);  // Display success message
-      if(response.data.user.role === "admin"){
-        navigate("/admin")
+
+      localStorage.setItem("role", role);
+      setMessage(response.data.message);
+      setError('');
+
+      // ✅ Redirect based on role
+      if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "donor") {
+        navigate("/donordashboard");
+      } else if (role === "patient") {
+        navigate("/patientdashboard");
+      } else {
+        navigate("/");
       }
-      if(response.data.role){
-        navigate("/")
-      }
-     
-      setError(''); // Clear any previous error message
+
     } catch (error) {
       console.error('Error sending data:', error);
       setError(error.response ? error.response.data.message : 'Something went wrong');
-      setMessage(''); // Clear any previous success message
+      setMessage('');
     }
-    
-
   };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      {console.log(message)}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <Heart className="h-12 w-12 text-red-600" />
@@ -126,7 +131,7 @@ const Login = () => {
             </div>
           </form>
 
-          {/* Display Messages */}
+          {/* Message Display */}
           {message && <div className="text-green-500 text-center mt-4">{message}</div>}
           {error && <div className="text-red-500 text-center mt-4">{error}</div>}
         </div>

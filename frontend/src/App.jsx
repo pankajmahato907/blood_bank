@@ -20,7 +20,7 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow mt-16">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
