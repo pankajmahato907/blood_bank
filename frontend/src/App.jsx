@@ -7,12 +7,12 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Criteria from './pages/Criteria';
-import AdminDashboard from './pages/admindashboard/admindashboard';
 import DonorDashboard from './pages/donordashboard/donordashboard';
 import PatientDashboard from './pages/patientdashboard/patientdashboard';
 import AdminRoute from './components/AdminRoute';
 import DonorRegistration from './pages/donordashboard/donorRegistration';
 import PatientRegistration from './pages/patientdashboard/patientregistration';
+import AdminDashboard from './pages/admindashboard/admindashboard';
 
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
             {/* Dashboards */}
             <Route path="/donordashboard" element={<DonorDashboard />} />
             <Route path="/patientdashboard" element={<PatientDashboard />} />
-            <Route path="/admindashboard" element={<AdminRoute> <AdminDashboard />  </AdminRoute> } />
+            <Route path="/admin" element={<AdminRoute> <AdminDashboard />  </AdminRoute> } />
 
             {/* Donor Registration Page */}
             <Route path="/registerdonor" element={<DonorRegistration />} />
