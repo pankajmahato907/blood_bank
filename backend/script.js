@@ -10,22 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON request body
 
-// Function to add an admin if none exists
-// async function addAdmin() {
-//     const existingAdmin = await User.findOne({ role: 'admin' });
-//     if (!existingAdmin) {
-//         const hashedPassword = await bcrypt.hash('adminPassword', 10);
-//         const admin = new User({
-//             firstName: 'Admin',
-//             lastName: 'User',
-//             email: 'admin@example.com',
-//             password: hashedPassword,
-//             role: 'admin',
-//         });
-//         await admin.save();
-//         console.log('Admin user created!');
-//     }
-// }
 
 // Login Route
 app.post('/login', async (req, res) => {
