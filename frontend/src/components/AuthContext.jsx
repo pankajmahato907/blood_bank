@@ -1,20 +1,26 @@
-// src/context/AuthContext.js (adjust path as needed)
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Create context
 const AuthContext = createContext();
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
-  const role = localStorage.getItem("role"); // stored like: "admin", "donor", etc.
-  const user = { role }; // Wrap it into a user object
+  const [loggedIN, SetisLoggedIn] = useState(false);
+  const role = localStorage.getItem("role");
+  const user = { role };
+
+ 
+  useEffect(() => {
+    if (user?.role) {
+      SetisLoggedIn(true);
+    } else {
+      SetisLoggedIn(false);
+    }
+  }, [user?.role]);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, loggedIN, SetisLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// useAuth custom hook
 export const useAuth = () => useContext(AuthContext);

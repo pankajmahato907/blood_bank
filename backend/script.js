@@ -78,9 +78,11 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+const port = 3000;
 // Server Setup
-app.listen(3000, async () => {
+app.listen(port, async () => {
     await connection();
     // await addAdmin();  // Ensure admin is added if none exists
-    console.log('Server running on port 3000');
+    console.log(`Server running on http://localhost:${port}`);
+
 });

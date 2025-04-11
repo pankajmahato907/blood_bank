@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import axios from "axios";
+import { useAuth } from '../components/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +10,8 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+    const { loggedIn , SetisLoggedIn,user} = useAuth();
+    const role = user?.role;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +23,8 @@ const Login = () => {
       });
 
       const role = response.data.user.role;
-
+      SetisLoggedIn(true);
+      alert("Loggin successful")
       console.log('Response:', response.data);
 
       localStorage.setItem("role", role);

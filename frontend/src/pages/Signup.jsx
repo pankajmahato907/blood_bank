@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ const Signup = () => {
     role: 'donor', // default role
   });
 
+  const navigation = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -26,6 +27,8 @@ const Signup = () => {
       try {
         const response = await axios.post('http://localhost:3000/signup', formData);
         console.log('Response:', response.data);
+        alert("Signup successful")
+        navigation("/login")
       } catch (error) {
         console.error('Error sending data:', error);
       }

@@ -13,6 +13,9 @@ import AdminRoute from './components/AdminRoute';
 import DonorRegistration from './pages/donordashboard/donorRegistration';
 import PatientRegistration from './pages/patientdashboard/patientregistration';
 import AdminDashboard from './pages/admindashboard/admindashboard';
+import AdminProfile from './components/Profiles/AdminProfile';
+import PatientProfile from './components/Profiles/PatientProfile';
+import DonorProfile from './components/Profiles/DonorProfile';
 
 
 function App() {
@@ -29,6 +32,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/criteria" element={<Criteria />} />
+            <Route path='/adminProfile' element = {<AdminProfile/>}/>
+            <Route path='/patientProfile' element = {<PatientProfile/>}/>
+            <Route path='/donorProfile' element = {<DonorProfile/>}/>
 
             {/* Dashboards */}
             <Route path="/donordashboard" element={<DonorDashboard />} />
