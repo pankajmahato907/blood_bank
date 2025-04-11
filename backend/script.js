@@ -107,6 +107,25 @@ app.get('/donors', async (req, res) => {
 });
 
 // -------------------------
+// 🔍 Search Donors Route
+// -------------------------
+app.get('/donors/search', async (req, res) => {
+    try {
+      const { bloodGroup, address } = req.query;
+  
+      const query = {};
+      if (bloodGroup) query.bloodGroup = bloodGroup;
+      if (address) query.address = { $regex: address, $options: 'i' }; // Case-insensitive match
+  
+      const donors = await Donor.find(query);
+      res.status(200).json(donors);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error searching donors", error: error.message });
+    }
+  });
+
+// -------------------------
 // 🚀 Server Setup
 // -------------------------
 const port = 3000;

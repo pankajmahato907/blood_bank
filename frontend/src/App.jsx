@@ -16,7 +16,8 @@ import AdminDashboard from './pages/admindashboard/admindashboard';
 import AdminProfile from './components/Profiles/AdminProfile';
 import PatientProfile from './components/Profiles/PatientProfile';
 import DonorProfile from './components/Profiles/DonorProfile';
-import AllDonors from './pages/donordashboard/AllDonors';
+import AllDonors from './pages/patientdashboard/AllDonors';
+import SearchDonor from './pages/patientdashboard/SearchDonor';
 
 
 
@@ -42,11 +43,13 @@ function App() {
             <Route path="/donordashboard" element={<DonorDashboard />} />
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route path="/admin" element={<AdminRoute> <AdminDashboard />  </AdminRoute> } />
+            
 
             {/* Donor Registration Page */}
             <Route path="/registerdonor" element={<DonorRegistration />} />
             <Route path="/registerpatient" element={<PatientRegistration />} />
             <Route path="/donors" element={<AllDonors />} />
+            <Route path="/search-donor" element={<SearchDonor />} />
           </Routes>
         </main>
         <Footer />
