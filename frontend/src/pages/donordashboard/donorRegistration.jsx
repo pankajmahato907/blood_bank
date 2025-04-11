@@ -16,12 +16,33 @@ const DonorRegistration = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  //for baackend (Donor registered)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-    // You can send formData to backend here
+  
+    try {
+      const response = await fetch('http://localhost:3000/donors/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert('Donor registered successfully!');
+        navigate('/donordashboard'); // redirect after success
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong while submitting.');
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md space-y-6">
