@@ -18,6 +18,7 @@ import PatientProfile from './components/Profiles/PatientProfile';
 import DonorProfile from './components/Profiles/DonorProfile';
 import AllDonors from './pages/patientdashboard/AllDonors';
 import SearchDonor from './pages/patientdashboard/SearchDonor';
+import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 
 
 
@@ -50,6 +51,7 @@ function App() {
             <Route path="/registerpatient" element={<PatientRegistration />} />
             <Route path="/donors" element={<AllDonors />} />
             <Route path="/search-donor" element={<SearchDonor />} />
+            <Route path="/patientrequest" element={<AllPatientRequests />} />
           </Routes>
         </main>
         <Footer />

@@ -26,7 +26,10 @@ const DonorDashboard = () => {
         >
           Donor Registration
         </button>
-        <button className="bg-blue-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold">
+        <button
+          onClick={() => navigate('/patientrequest')}
+          className="bg-blue-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
+        >
           Request Receive
         </button>
         <button className="bg-purple-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold">
