@@ -30,20 +30,36 @@ const connection = async () => {
 // -------------------------
 app.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    console.log("Login attempt:", email);
+
+    // Trim and lowercase email to match DB format
+    email = email.trim().toLowerCase();
+    console.log("Processed email for DB query:", email);
+
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'User not found' });
+
+    if (!user) {
+      console.log("User not found for email:", email);
+      return res.status(400).json({ message: 'User not found' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+      console.log("Password mismatch");
+      return res.status(400).json({ message: 'Invalid Password' });
+    }
 
     const { password: userPassword, ...userData } = user._doc;
     res.json({ message: 'Login successful', user: userData });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 });
+
 
 // -------------------------
 // 📝 Signup Route
@@ -73,6 +89,33 @@ app.post('/signup', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error signing up", error: error.message });
+  }
+});
+
+// 👑 One-time Admin Creator Route
+// -------------------------
+app.post('/create-admin', async (req, res) => {
+  try {
+    const existingAdmin = await User.findOne({ email: 'bloodbank123@gmail.com' });
+
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'Admin already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    const admin = new User({
+      firstName: 'Blood',
+      lastName: 'Bank',
+      email: 'bloodbank123@gmail.com',
+      password: hashedPassword,
+      role: 'admin'
+    });
+
+    await admin.save();
+    res.status(201).json({ message: 'Admin user created successfully!', admin });
+  } catch (error) {
+    console.error('Error creating admin:', error);
+    res.status(500).json({ message: 'Failed to create admin', error: error.message });
   }
 });
 
