@@ -155,12 +155,7 @@ const DonorsPage = () => {
           ))}
         </tbody>
       </table>
-      <button
-        onClick={addRow}
-        className="mt-4 bg-red-600 text-white px-4 py-2 rounded"
-      >
-        Add New Donor
-      </button>
+      
     </div>
   );
 };

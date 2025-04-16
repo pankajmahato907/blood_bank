@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const connection = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/mydatabase', {
+    await mongoose.connect('mongodb://localhost:27017/bloodbank', {
     });
     console.log('Connected to MongoDB');
   } catch (error) {

@@ -5,7 +5,6 @@ const BloodRequestsPage = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch patient requests
   useEffect(() => {
     fetchRequests();
   }, []);
@@ -52,32 +51,6 @@ const BloodRequestsPage = () => {
     }
   };
 
-  const addRow = () => {
-    const newRequest = {
-      _id: Date.now().toString(),
-      name: '',
-      bloodGroup: '',
-      phone: '',
-      address: '',
-      note: '',
-      requestForm: '',
-      confirmed: false,
-      editable: true,
-      isNew: true
-    };
-    setRequests(prev => [newRequest, ...prev]);
-  };
-
-  const saveNewRequest = async (request) => {
-    try {
-      const { _id, editable, isNew, ...toSend } = request;
-      const res = await axios.post('http://localhost:3000/patients', toSend);
-      fetchRequests();
-    } catch (err) {
-      console.error("Error saving new request:", err);
-    }
-  };
-
   const confirmRequest = async (id) => {
     try {
       await axios.put(`http://localhost:3000/patients/${id}`, { confirmed: true });
@@ -91,15 +64,7 @@ const BloodRequestsPage = () => {
 
   return (
     <div className="bg-white p-6 rounded shadow">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-red-700">Patient Blood Requests</h2>
-        <button
-          onClick={addRow}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-        >
-          Add New Request
-        </button>
-      </div>
+      <h2 className="text-xl font-bold text-red-700 mb-4">Patient Blood Requests</h2>
 
       {loading ? (
         <p className="text-gray-500">Loading...</p>
@@ -159,21 +124,12 @@ const BloodRequestsPage = () => {
                 </td>
                 <td className="space-x-2">
                   {r.editable ? (
-                    r.isNew ? (
-                      <button
-                        onClick={() => saveNewRequest(r)}
-                        className="text-green-600 hover:underline"
-                      >
-                        Save
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => saveEdit(r)}
-                        className="text-green-600 hover:underline"
-                      >
-                        Save
-                      </button>
-                    )
+                    <button
+                      onClick={() => saveEdit(r)}
+                      className="text-green-600 hover:underline"
+                    >
+                      Save
+                    </button>
                   ) : (
                     <button
                       onClick={() => toggleEdit(r._id)}
