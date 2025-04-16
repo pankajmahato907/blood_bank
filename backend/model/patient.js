@@ -1,7 +1,11 @@
 // patient.js (Model)
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const patientSchema = new mongoose.Schema({
+  _id:{
+    type:Schema.Types.ObjectId,
+    ref:"User"
+  },
   name: String, 
   phone: String,
   bloodGroup: String,

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PatientRegistration = () => {
   const [formData, setFormData] = useState({
+    _id: localStorage.getItem("userId"), // ✅ fixed key
     name: '',
     phone: '',
     bloodGroup: '',
@@ -26,12 +27,9 @@ const PatientRegistration = () => {
 
     try {
       const data = new FormData();
-      data.append('name', formData.name);
-      data.append('phone', formData.phone);
-      data.append('bloodGroup', formData.bloodGroup);
-      data.append('address', formData.address);
-      data.append('note', formData.note);
-      data.append('requestForm', formData.requestForm);
+      Object.entries(formData).forEach(([key, value]) => {
+        data.append(key, value);
+      });
 
       const response = await fetch('http://localhost:3000/patients/register', {
         method: 'POST',
@@ -55,7 +53,7 @@ const PatientRegistration = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg space-y-4">
-        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">Blood Request form</h1>
+        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-4">Blood Request Form</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -94,6 +92,7 @@ const PatientRegistration = () => {
             name="requestForm"
             onChange={handleFileChange}
             className="w-full px-4 py-2 bg-gray-200 rounded-md"
+            accept="image/*,.pdf"
             required
           />
           <input

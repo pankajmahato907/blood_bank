@@ -18,10 +18,12 @@ import PatientProfile from './components/Profiles/PatientProfile';
 import DonorProfile from './components/Profiles/DonorProfile';
 import AllDonors from './pages/patientdashboard/AllDonors';
 import SearchDonor from './pages/patientdashboard/SearchDonor';
-import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 import AllBloodBank from './pages/patientdashboard/AllBloodBank';
 import { useState , useEffect} from 'react';
 import axios from 'axios'
+import RequestList from './RequestList';
+import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
+import Profile from './components/Profiles/Profile';
 
 function App() {
 
@@ -64,8 +66,15 @@ function App() {
             <Route path="/registerpatient" element={<PatientRegistration />} />
             <Route path="/donors" element={<AllDonors />} />
             <Route path="/search-donor" element={<SearchDonor />} />
-            <Route path="/patientrequest" element={<AllPatientRequests />} />
+            <Route path="/patientrequest" element={<AllPatientRequests/>} />
             <Route path="/bloodbanks" element={<AllBloodBank  bankDetails = {bankDetails}/>} />
+
+
+
+
+            <Route path="/request" element={<RequestList/>} />
+            <Route path="/profile" element={<Profile />}/>
+
           </Routes>
         </main>
         <Footer />

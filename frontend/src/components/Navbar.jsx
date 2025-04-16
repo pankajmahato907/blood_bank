@@ -7,17 +7,18 @@ const Navbar = () => {
   const Navigation = useNavigate();
   const { loggedIN,user } = useAuth();
   const handleNavigate = ()=>{
-    console.log("hello")
-      const role = user?.role;
-      if(role === "admin"){
-        Navigation("/adminProfile")
-      }
-      if(role === "patient"){
-        Navigation("/patientProfile")
-      }
-      if(role === "donor"){
-        Navigation("/donorProfile")
-      }
+    // console.log("hello")
+    //   const role = user?.role;
+    //   if(role === "admin"){
+    //     Navigation("/adminProfile")
+    //   }
+    //   if(role === "patient"){
+    //     Navigation("/patientProfile")
+    //   }
+    //   if(role === "donor"){
+    //     Navigation("/donorProfile")
+    //   }
+    Navigation("/profile")
       
   }
 

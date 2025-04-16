@@ -69,28 +69,64 @@ app.post('/login', async (req, res) => {
 });
 
 
-// Signup Route
-
 app.post('/signup', async (req, res) => {
   try {
-    const { firstName, lastName, email, password, role } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+    } = req.body;
+
     if (!["donor", "patient", "admin"].includes(role)) {
       return res.status(400).json({ message: "Role must be donor, patient or admin" });
     }
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "Email already in use" });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ firstName, lastName, email, password: hashedPassword, role });
+
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      role,
+    });
+
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully!", user: newUser });
+    // Save only _id for Donor
+    if (role === "donor") {
+      const newDonor = new Donor({
+        _id: newUser._id,
+      });
+      await newDonor.save();
+    }
+
+    // Save only _id for Patient
+    if (role === "patient") {
+      const newPatient = new Patient({
+        _id: newUser._id,
+      });
+      await newPatient.save();
+    }
+
+    res.status(201).json({
+      message: "User registered successfully!",
+      user: newUser,
+    });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error signing up", error: error.message });
   }
 });
+
 
 
 //  One-time Admin Creator
@@ -203,24 +239,50 @@ app.get('/patients/requests', async (req, res) => {
 
 app.post('/patients/register', upload.single('requestForm'), async (req, res) => {
   try {
-    const { name, phone, bloodGroup, address, note } = req.body;
+    const { _id, name, phone, bloodGroup, address, note } = req.body;
     const filePath = req.file ? req.file.path : null;
 
-    const newPatient = new Patient({
-      name,
-      phone,
-      bloodGroup,
-      address,
-      note,
-      requestForm: filePath,
-      confirmed: false, // default pending
-    });
+    // 1. Check if _id exists in Patient collection
+    const existingPatient = await Patient.findById(_id);
 
-    await newPatient.save();
-    res.status(201).json({ message: 'Patient registered successfully!', patient: newPatient });
+    if (!existingPatient) {
+      return res.status(404).json({ message: 'Patient ID not found. Cannot register details.' });
+    }
+
+    // 2. Update only if found
+    existingPatient.name = name;
+    existingPatient.phone = phone;
+    existingPatient.bloodGroup = bloodGroup;
+    existingPatient.address = address;
+    existingPatient.note = note;
+    if (filePath) existingPatient.requestForm = filePath;
+    existingPatient.confirmed = false;
+
+    await existingPatient.save();
+
+    res.status(200).json({ message: 'Patient details updated successfully!', patient: existingPatient });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error registering patient', error: error.message });
+    res.status(500).json({ message: 'Error updating patient', error: error.message });
+  }
+});
+
+// get patient form by id
+app.get('/patients/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const patient = await Patient.findById(id);
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    res.status(200).json(patient);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving patient', error: error.message });
   }
 });
 

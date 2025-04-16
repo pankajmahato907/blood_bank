@@ -24,10 +24,12 @@ const Login = () => {
 
       const role = response.data.user.role;
       SetisLoggedIn(true);
-      alert("Loggin successful")
+      localStorage.setItem("userId",response.data.user._id);
+      alert("Loggin successful");
       console.log('Response:', response.data);
-
+      localStorage.setItem("Name",response.data.user.firstName+" "+ response.data.user.lastName);
       localStorage.setItem("role", role);
+      localStorage.setItem("email",email);
       setMessage(response.data.message);
       setError('');
 
