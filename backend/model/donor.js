@@ -11,7 +11,7 @@ const donorSchema = new mongoose.Schema(
       required: true,
     },
     address: { type: String, required: true },
-    available: { type: Boolean, default: true }, // ✅ ADD THIS
+    available: { type: Boolean, default: true }, 
   },
   { timestamps: true }
 );

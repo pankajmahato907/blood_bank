@@ -2,17 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const AllBloodBank = () => {
-  const [banks, setBanks] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/bloodbanks')
-      .then(res => setBanks(res.data))
-      .catch(err => console.error("Error fetching blood banks:", err));
-  }, []);
+const AllBloodBank = ({bankDetails}) => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
+        {console.log(bankDetails)}
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Blood Banks List</h2>
       <div className="overflow-x-auto max-w-6xl mx-auto shadow-md rounded-lg bg-white">
         <table className="min-w-full divide-y divide-gray-200 text-left">

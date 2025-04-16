@@ -6,7 +6,7 @@ const DonorProfile = () => {
   const [available, setAvailable] = useState(true);
   const navigate = useNavigate();
 
-  const donorId = localStorage.getItem('donorId'); // 👈 Make sure this is stored during login/signup
+  const donorId = localStorage.getItem('donorId'); 
 
   useEffect(() => {
     const fetchDonor = async () => {
@@ -14,7 +14,7 @@ const DonorProfile = () => {
         const res = await fetch(`http://localhost:3000/donors/${donorId}`);
         const data = await res.json();
         setDonor(data);
-        setAvailable(data.available); // Initialize availability
+        setAvailable(data.available); 
       } catch (err) {
         console.error('Error fetching donor profile:', err);
       }

@@ -20,18 +20,30 @@ import AllDonors from './pages/patientdashboard/AllDonors';
 import SearchDonor from './pages/patientdashboard/SearchDonor';
 import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 import AllBloodBank from './pages/patientdashboard/AllBloodBank';
-
-
+import { useState , useEffect} from 'react';
+import axios from 'axios'
 
 function App() {
+
+  const [bankDetails, setBankDetails] = useState([]);
+   useEffect(() => {
+      axios.get('http://localhost:3000/bloodbanks')
+        .then(res =>{
+          setBankDetails(res.data)
+        } )
+        .catch(err => console.error("Error fetching blood banks:", err));
+    }, []);
+
+  
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
+        {console.log("From home page",bankDetails)}
         <Navbar />
         <main className="flex-grow mt-16">
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home bankDetails = {bankDetails} />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
@@ -43,7 +55,7 @@ function App() {
 
             {/* Dashboards */}
             <Route path="/donordashboard" element={<DonorDashboard />} />
-            <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path="/patientdashboard" element={<PatientDashboard bankDetails = {bankDetails} />} />
             <Route path="/admin" element={<AdminRoute> <AdminDashboard />  </AdminRoute> } />
             
 
@@ -53,7 +65,7 @@ function App() {
             <Route path="/donors" element={<AllDonors />} />
             <Route path="/search-donor" element={<SearchDonor />} />
             <Route path="/patientrequest" element={<AllPatientRequests />} />
-            <Route path="/bloodbanks" element={<AllBloodBank />} />
+            <Route path="/bloodbanks" element={<AllBloodBank  bankDetails = {bankDetails}/>} />
           </Routes>
         </main>
         <Footer />

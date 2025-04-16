@@ -7,12 +7,45 @@ import Donor from './model/donor.js';
 import Patient from './model/patient.js';
 import upload from './middleware/upload.js';
 import BloodBank from './model/bloodBank.js';
+import ContactMessage from './model/ContactMessage.js';
+import SendMail from './NodeMailer/SendMail.js';
+
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+
+
+//contact us
+app.post('/contact', async (req, res) => {
+  try {
+    console.log(req.body)
+    const { name, email, subject, message } = req.body;
+
+    
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    SendMail(email , message , subject , name);
+    // Create a new contact message
+    const newMessage = new ContactMessage({
+      name,
+      email,
+      subject,
+      message
+    });
+
+   
+    await newMessage.save();
+    res.status(201).json({ message: 'Message sent successfully!' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 //  Login Route
