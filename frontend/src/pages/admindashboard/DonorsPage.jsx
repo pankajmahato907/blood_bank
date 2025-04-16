@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const DonorsPage = () => {
   const [donors, setDonors] = useState([
@@ -14,21 +15,70 @@ const DonorsPage = () => {
     },
   ]);
 
+  useEffect(() => {
+    const fetchDonors = async () => {
+      try {
+        const resp = await axios.get("http://localhost:3000/donors");
+        const formatted = resp.data.map(d => ({
+          ...d,
+          available: d.available ? 'Yes' : 'No',
+          editable: false,
+        }));
+        setDonors(formatted);
+      } catch (error) {
+        console.error("Error fetching donors:", error);
+      }
+    };
+  
+    fetchDonors();
+  }, []);
+
   const handleChange = (_id, field, value) => {
     setDonors(prev =>
       prev.map(d => (d._id === _id ? { ...d, [field]: value } : d))
     );
   };
 
-  const toggleEdit = (_id) => {
-    setDonors(prev =>
-      prev.map(d => (d._id === _id ? { ...d, editable: !d.editable } : d))
-    );
+  const toggleEdit = async (_id) => {
+    const donorToEdit = donors.find(d => d._id === _id);
+  
+    if (donorToEdit.editable) {
+      try {
+        const updatedDonor = {
+          ...donorToEdit,
+          available: donorToEdit.available === 'Yes',
+        };
+  
+        await axios.put(`http://localhost:3000/donors/${_id}`, updatedDonor);
+  
+        setDonors(prev =>
+          prev.map(d =>
+            d._id === _id ? { ...d, editable: false } : d
+          )
+        );
+      } catch (err) {
+        console.error('Error updating donor:', err);
+      }
+    } else {
+     
+      setDonors(prev =>
+        prev.map(d =>
+          d._id === _id ? { ...d, editable: true } : d
+        )
+      );
+    }
   };
+  
 
-  const deleteRow = (_id) => {
-    setDonors(prev => prev.filter(d => d._id !== _id));
+  const deleteRow = async (_id) => {
+    try {
+      await axios.delete(`http://localhost:3000/donors/delete/${_id}`);
+      setDonors(prev => prev.filter(d => d._id !== _id));
+    } catch (err) {
+      console.error('Error deleting donor:', err);
+    }
   };
+  
 
   const addRow = () => {
     setDonors(prev => [
@@ -50,6 +100,7 @@ const DonorsPage = () => {
     <div className="bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-4">Donor List</h2>
       <table className="w-full text-left border">
+       
         <thead>
           <tr className="bg-red-100 text-red-800">
             <th>Name</th>

@@ -8,7 +8,7 @@ const PatientDashboard = () => {
     { title: 'Search Donor', color: 'bg-red-500', link: '/search-donor' },
     { title: 'Request Blood', color: 'bg-blue-500', link: '/registerpatient' },
     { title: 'All Donors', color: 'bg-green-500', link: '/donors' },
-    { title: 'Blood Banks', color: 'bg-yellow-500', link: '/blood-banks' },
+    { title: 'Blood Banks', color: 'bg-yellow-500', link: '/bloodbanks' },
   ];
 
   return (

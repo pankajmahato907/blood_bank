@@ -140,6 +140,18 @@ app.put('/donors/:id', async (req, res) => {
   }
 });
 
+// delete
+app.delete('/donors/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Donor.findByIdAndDelete(id);
+    res.json({ message: 'Donor deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete donor' });
+  }
+});
+
+
 //  Get All Patient Requests
 
 app.get('/patients/requests', async (req, res) => {
@@ -151,6 +163,7 @@ app.get('/patients/requests', async (req, res) => {
     res.status(500).json({ message: "Error fetching patient requests", error: error.message });
   }
 });
+
 
 
 // Patient Registration with File Upload
@@ -210,6 +223,17 @@ app.delete('/patients/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error deleting patient', error: error.message });
+  }
+});
+
+// Get all patient requests
+app.get('/patients', async (req, res) => {
+  try {
+    const patients = await Patient.find();
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching patient requests', error: error.message });
   }
 });
 

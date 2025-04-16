@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import DashboardPage from './DashboardPage';
 import BloodRequestsPage from './BloodRequestsPage';
 import DonorsPage from './DonorsPage';
@@ -6,14 +7,41 @@ import BloodBanksPage from './BloodBanksPage';
 
 const AdminDashboard = () => {
   const [activePage, setActivePage] = useState('dashboard');
+  const [totals, setTotals] = useState({
+    donors: 0,
+    requests: 0,
+    banks: 0,
+  });
+
+  useEffect(() => {
+    const fetchTotals = async () => {
+      try {
+        const [donorRes, requestRes, bankRes] = await Promise.all([
+          axios.get('http://localhost:3000/donors'),
+          axios.get('http://localhost:3000/patients'),
+          axios.get('http://localhost:3000/bloodbanks'),
+        ]);
+
+        setTotals({
+          donors: donorRes.data.length,
+          requests: requestRes.data.length,
+          banks: bankRes.data.length,
+        });
+      } catch (err) {
+        console.error("Failed to fetch totals", err);
+      }
+    };
+
+    fetchTotals();
+  }, []);
 
   const renderContent = () => {
     switch (activePage) {
-      case 'dashboard': return <DashboardPage />;
+      case 'dashboard': return <DashboardPage totals={totals} />;
       case 'requests': return <BloodRequestsPage />;
       case 'donors': return <DonorsPage />;
       case 'banks': return <BloodBanksPage />;
-      default: return <DashboardPage />;
+      default: return <DashboardPage totals={totals} />;
     }
   };
 

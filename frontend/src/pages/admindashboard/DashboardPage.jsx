@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DashboardPage = () => {
+const DashboardPage = ({totals}) => {
   const stats = [
-    { label: 'Total Blood Requests', value: 23 },
-    { label: 'Total Donors Registered', value: 45 },
-    { label: 'Total Blood Banks', value: 12 },
+    { label: 'Total Blood Requests', value: totals. requests },
+    { label: 'Total Donors Registered', value: totals.donors },
+    { label: 'Total Blood Banks', value: totals.banks },
   ];
 
   return (

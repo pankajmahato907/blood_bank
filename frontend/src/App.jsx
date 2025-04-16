@@ -19,6 +19,7 @@ import DonorProfile from './components/Profiles/DonorProfile';
 import AllDonors from './pages/patientdashboard/AllDonors';
 import SearchDonor from './pages/patientdashboard/SearchDonor';
 import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
+import AllBloodBank from './pages/patientdashboard/AllBloodBank';
 
 
 
@@ -52,6 +53,7 @@ function App() {
             <Route path="/donors" element={<AllDonors />} />
             <Route path="/search-donor" element={<SearchDonor />} />
             <Route path="/patientrequest" element={<AllPatientRequests />} />
+            <Route path="/bloodbanks" element={<AllBloodBank />} />
           </Routes>
         </main>
         <Footer />
