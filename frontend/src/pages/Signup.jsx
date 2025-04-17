@@ -10,14 +10,14 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'donor', // default role
+    role: 'donor', 
   });
 
   const navigation = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic password confirmation check
+    //Basic password confirmation check
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
@@ -101,7 +101,7 @@ const Signup = () => {
               </div>
             </div>
 
-            {/* Role selection */}
+           //here role selction
             <div>
               <label htmlFor="role" className="block text-sm font-medium text-gray-700">
                 Register as

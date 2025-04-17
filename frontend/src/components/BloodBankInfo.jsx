@@ -8,7 +8,7 @@ function BloodBankInfo({ bankDetails }) {
       {bankDetails.map((item, index) => (
         <div
           key={index}
-          className="bg-red-900/90 p-6 rounded-lg text-white w-72" // 👈 equal width
+          className="bg-red-900/90 p-6 rounded-lg text-white w-72" 
         >
           <h3 className="text-xl font-semibold mb-4">{item.name}</h3>
           <div className="space-y-3">

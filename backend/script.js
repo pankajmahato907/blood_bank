@@ -11,6 +11,7 @@ import ContactMessage from './model/ContactMessage.js';
 import SendMail from './NodeMailer/SendMail.js';
 
 
+
 const app = express();
 
 app.use(cors());
@@ -377,7 +378,26 @@ app.delete('/bloodbanks/:id', async (req, res) => {
   }
 });
 
+// Search donors by blood group and address
+app.get('/search', async (req, res) => {
+  try {
+    const { bloodGroup, address } = req.query;
 
+    const query = {};
+    if (bloodGroup) {
+      query.bloodGroup = { $regex: new RegExp(bloodGroup, 'i') };
+    }
+    if (address) {
+      query.address = { $regex: new RegExp(address, 'i') };
+    }
+
+    const results = await Donor.find(query);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error searching donors', error: error.message });
+  }
+});
 
 
 // Start Server

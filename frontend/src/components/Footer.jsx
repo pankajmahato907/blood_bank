@@ -31,11 +31,11 @@ const Footer = () => {
           <ul className="space-y-2">
             <li className="flex justify-center md:justify-start items-center">
               <Phone className="h-5 w-5 mr-2" />
-              <span>+977-98078867..</span>
+              <span>+041560068</span>
             </li>
             <li className="flex justify-center md:justify-start items-center">
               <Mail className="h-5 w-5 mr-2" />
-              <span>pankajmahato123@gmail.com</span>
+              <span>support@digitalbloodbank.com</span>
             </li>
           </ul>
         </div>

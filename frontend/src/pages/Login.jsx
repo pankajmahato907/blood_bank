@@ -9,9 +9,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);  
   const navigate = useNavigate();
-    const { loggedIn , SetisLoggedIn,user} = useAuth();
-    const role = user?.role;
+  const { loggedIn , SetisLoggedIn, user } = useAuth();
+  const role = user?.role;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,16 +25,16 @@ const Login = () => {
 
       const role = response.data.user.role;
       SetisLoggedIn(true);
-      localStorage.setItem("userId",response.data.user._id);
-      alert("Loggin successful");
+      localStorage.setItem("userId", response.data.user._id);
+      alert("Login successful");
       console.log('Response:', response.data);
-      localStorage.setItem("Name",response.data.user.firstName+" "+ response.data.user.lastName);
+      localStorage.setItem("Name", response.data.user.firstName + " " + response.data.user.lastName);
       localStorage.setItem("role", role);
-      localStorage.setItem("email",email);
+      localStorage.setItem("email", email);
       setMessage(response.data.message);
       setError('');
 
-      // ✅ Redirect based on role
+      // Redirect based on role
       if (role === "admin") {
         navigate("/admin");
       } else if (role === "donor") {
@@ -93,17 +94,25 @@ const Login = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}  
                   autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500"
                 />
+               
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-gray-600"
+                >
+                  {showPassword ? 'Hide' : 'Show'}
+                </button>
               </div>
             </div>
 
@@ -119,12 +128,6 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-red-600 hover:text-red-500">
-                  Forgot your password?
-                </a>
-              </div>
             </div>
 
             <div>
@@ -137,7 +140,7 @@ const Login = () => {
             </div>
           </form>
 
-          {/* Message Display */}
+          //display message
           {message && <div className="text-green-500 text-center mt-4">{message}</div>}
           {error && <div className="text-red-500 text-center mt-4">{error}</div>}
         </div>
