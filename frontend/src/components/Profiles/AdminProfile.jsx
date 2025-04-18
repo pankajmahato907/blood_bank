@@ -1,4 +1,3 @@
-// AdminProfile.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +5,7 @@ const AdminProfile = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear auth and redirect
+    
     localStorage.clear();
     navigate('/login');
   };

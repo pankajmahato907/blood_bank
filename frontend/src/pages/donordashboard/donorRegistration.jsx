@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const DonorRegistration = () => {
   const [formData, setFormData] = useState({
@@ -10,13 +10,13 @@ const DonorRegistration = () => {
     address: '',
   });
 
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //for baackend (Donor registered)
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -33,7 +33,7 @@ const DonorRegistration = () => {
   
       if (response.ok) {
         alert('Donor registered successfully!');
-        navigate('/donordashboard'); // redirect after success
+        navigate('/donordashboard'); 
       } else {
         alert(`Error: ${data.message}`);
       }
@@ -46,7 +46,7 @@ const DonorRegistration = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md space-y-6">
-        {/* Title: Register as Donor */}
+       
         <h1 className="text-3xl font-semibold text-center text-gray-700 mb-6">
           Register as Donor
         </h1>

@@ -140,7 +140,7 @@ const Login = () => {
             </div>
           </form>
 
-          //display message
+        
           {message && <div className="text-green-500 text-center mt-4">{message}</div>}
           {error && <div className="text-red-500 text-center mt-4">{error}</div>}
         </div>

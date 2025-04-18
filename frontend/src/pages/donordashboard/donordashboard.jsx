@@ -9,7 +9,7 @@ const DonorDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 px-2">
-      {/* Hero Image */}
+      
       <div className="w-full mb-6">
         <img
           src={blooddonate}
@@ -18,7 +18,7 @@ const DonorDashboard = () => {
         />
       </div>
 
-      {/* Dashboard Buttons */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto px-2">
         <button
           onClick={() => setShowCriteria(true)}
@@ -43,7 +43,7 @@ const DonorDashboard = () => {
         </button>
       </div>
 
-      {/* Eligibility Criteria Modal */}
+      
       {showCriteria && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4">
           <div className="bg-white p-5 rounded-lg shadow-lg max-w-md w-full">
@@ -64,7 +64,7 @@ const DonorDashboard = () => {
               <li>On certain medications (consult a doctor)</li>
             </ul>
 
-            {/* Checkbox */}
+           
             <div className="mt-4 flex items-center">
               <input
                 type="checkbox"
@@ -78,7 +78,7 @@ const DonorDashboard = () => {
               </label>
             </div>
 
-            {/* Modal Buttons */}
+            
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setShowCriteria(false)}

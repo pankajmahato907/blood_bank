@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PatientRegistration = () => {
   const [formData, setFormData] = useState({
-    _id: localStorage.getItem("userId"), // ✅ fixed key
+    _id: localStorage.getItem("userId"), 
     name: '',
     phone: '',
     bloodGroup: '',

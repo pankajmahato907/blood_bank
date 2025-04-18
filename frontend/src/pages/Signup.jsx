@@ -101,7 +101,7 @@ const Signup = () => {
               </div>
             </div>
 
-           //here role selction
+           
             <div>
               <label htmlFor="role" className="block text-sm font-medium text-gray-700">
                 Register as

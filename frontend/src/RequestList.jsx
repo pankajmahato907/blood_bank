@@ -12,7 +12,7 @@ const RequestList = () => {
       .then((res) => {
         // Check if 'requests' is an array or single object
         const responseData = res.data.requests || res.data;
-        setRequests(Array.isArray(responseData) ? responseData : [responseData]); // Ensure it is always an array
+        setRequests(Array.isArray(responseData) ? responseData : [responseData]); 
       })
       .catch((err) => console.error(err));
   }, [data]);

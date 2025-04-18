@@ -1,4 +1,4 @@
-// patient.js (Model)
+
 import mongoose, { Schema } from 'mongoose';
 
 const patientSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const patientSchema = new mongoose.Schema({
   bloodGroup: String,
   address: String,
   note: String,
-  requestForm: String, // File path
+  requestForm: String, 
   confirmed: {
     type: Boolean,
     default: false, // Admin will update this to true

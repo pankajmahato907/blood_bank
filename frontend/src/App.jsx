@@ -24,6 +24,7 @@ import axios from 'axios'
 import RequestList from './RequestList';
 import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 import Profile from './components/Profiles/Profile';
+import GoogleMap from './components/GoogleMap';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
+   
         {console.log("From home page",bankDetails)}
         <Navbar />
         <main className="flex-grow mt-16">
@@ -54,6 +56,7 @@ function App() {
             <Route path='/adminProfile' element = {<AdminProfile/>}/>
             <Route path='/patientProfile' element = {<PatientProfile/>}/>
             <Route path='/donorProfile' element = {<DonorProfile/>}/>
+            <Route path='/location' element = {<GoogleMap/>}/>
 
             {/* Dashboards */}
             <Route path="/donordashboard" element={<DonorDashboard />} />

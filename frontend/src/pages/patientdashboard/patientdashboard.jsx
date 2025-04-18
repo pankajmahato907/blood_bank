@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, MapPin } from 'lucide-react';
-import blooddonate from '../../assets/blooddonate.png'; // Your imported image
+import blooddonate from '../../assets/blooddonate.png'; 
 import BloodBankInfo from '../../components/BloodBankInfo';
 
 const PatientDashboard = ({bankDetails}) => {
@@ -14,7 +14,7 @@ const PatientDashboard = ({bankDetails}) => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 px-2"> 
-      {/* Hero Image */}
+      
       <div className="w-full mb-6">
         <img
           src={blooddonate}
