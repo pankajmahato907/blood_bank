@@ -1,9 +1,11 @@
 import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const name = localStorage.getItem('Name');
   const role = localStorage.getItem('role');
   const email = localStorage.getItem('email');
+  const Navigation = useNavigate();
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -17,7 +19,7 @@ const Profile = () => {
         <button
           onClick={() => {
             localStorage.clear();
-            window.location.reload(); 
+            Navigation("/");
           }}
           className="mt-6 px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-300"
         >

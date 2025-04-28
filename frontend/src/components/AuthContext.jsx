@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       SetisLoggedIn(false);
     }
-  }, [user?.role]);
+  }, [user?.role]);   
 
   return (
     <AuthContext.Provider value={{ user, loggedIN, SetisLoggedIn }}>

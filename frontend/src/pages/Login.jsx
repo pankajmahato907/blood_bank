@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import axios from "axios";
 import { useAuth } from '../components/AuthContext';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +28,7 @@ const Login = () => {
       const role = response.data.user.role;
       SetisLoggedIn(true);
       localStorage.setItem("userId", response.data.user._id);
-      alert("Login successful");
+      toast.success("Login successful");
       console.log('Response:', response.data);
       localStorage.setItem("Name", response.data.user.firstName + " " + response.data.user.lastName);
       localStorage.setItem("role", role);
@@ -47,6 +49,7 @@ const Login = () => {
 
     } catch (error) {
       console.error('Error sending data:', error);
+      toast.error(error.response ? error.response.data.message : 'Something went wrong');
       setError(error.response ? error.response.data.message : 'Something went wrong');
       setMessage('');
     }
@@ -140,9 +143,6 @@ const Login = () => {
             </div>
           </form>
 
-        
-          {message && <div className="text-green-500 text-center mt-4">{message}</div>}
-          {error && <div className="text-red-500 text-center mt-4">{error}</div>}
         </div>
       </div>
     </div>

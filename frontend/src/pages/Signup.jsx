@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const Signup = () => {
 
     //Basic password confirmation check
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      toast('Passwords do not match!');
       return;
     }
 
@@ -27,7 +28,7 @@ const Signup = () => {
       try {
         const response = await axios.post('http://localhost:3000/signup', formData);
         console.log('Response:', response.data);
-        alert("Signup successful")
+        toast("Signup successful")
         navigation("/login")
       } catch (error) {
         console.error('Error sending data:', error);

@@ -25,6 +25,7 @@ import RequestList from './RequestList';
 import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 import Profile from './components/Profiles/Profile';
 import GoogleMap from './components/GoogleMap';
+//import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -77,6 +78,7 @@ function App() {
 
             <Route path="/request" element={<RequestList/>} />
             <Route path="/profile" element={<Profile />}/>
+           
 
           </Routes>
         </main>
