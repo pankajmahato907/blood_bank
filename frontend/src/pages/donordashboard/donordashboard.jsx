@@ -1,15 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import blooddonate from '../../assets/blooddonate.png';
+import axios from 'axios';
 
 const DonorDashboard = () => {
   const navigate = useNavigate();
   const [showCriteria, setShowCriteria] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [donor, setDonor] = useState(null);
+  const email = localStorage.getItem('email');
+
+  useEffect(() => {
+    const fetchDonor = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/donors/${email}`);
+        setDonor(res.data);
+      } catch (err) {
+        setDonor(null);
+      }
+    };
+
+    if (email) {
+      fetchDonor();
+    }
+  }, [email]);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/donors/${email}`);
+      alert("Your donor registration has been deleted.");
+      setDonor(null);
+    } catch (err) {
+      alert("Failed to delete donor registration.");
+    }
+  };
+
+  const toggleAvailability = async () => {
+    try {
+      const res = await axios.put(`http://localhost:3000/donors/update-availability`, {
+        email,
+        available: !donor.available,
+      });
+      setDonor(res.data);
+    } catch (err) {
+      alert("Failed to update availability.");
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 px-2">
-      
+    <div className="min-h-screen bg-gray-50 py-6 px-4">
       <div className="w-full mb-6">
         <img
           src={blooddonate}
@@ -18,34 +57,34 @@ const DonorDashboard = () => {
         />
       </div>
 
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto px-2">
-        <button
-          onClick={() => setShowCriteria(true)}
-          className="bg-green-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
-        >
-          Donor Registration
-        </button>
-        <button
-          onClick={() => navigate('/patientrequest')}
-          className="bg-blue-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
-        >
-          Request Receive
-        </button>
-        <button className="bg-purple-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold">
-          Contribute
-        </button>
-        <button
-          onClick={() => navigate('/criteria')}
-          className="bg-orange-500 text-white py-8 rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
-        >
-          Donor Facts
-        </button>
+      {/* ✅ Centered Grid Container */}
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+          <button
+            onClick={!donor ? () => setShowCriteria(true) : () => navigate('/donor-detail')}
+            className="w-full min-h-[140px] bg-green-500 text-white rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
+          >
+            {!donor ? "Donor Registration" : "Donor Details"}
+          </button>
+
+          <button
+            onClick={() => navigate('/patientrequest')}
+            className="w-full min-h-[140px] bg-blue-500 text-white rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
+          >
+            Request Receive
+          </button>
+
+          <button
+            onClick={() => navigate('/criteria')}
+            className="w-full min-h-[140px] bg-orange-500 text-white rounded-lg shadow-md text-center text-lg font-semibold hover:scale-105 transition-transform duration-300"
+          >
+            Donor Facts
+          </button>
+        </div>
       </div>
 
-      
       {showCriteria && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4 z-50">
           <div className="bg-white p-5 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-lg font-bold text-red-700 border-b pb-2">Blood Donation Eligibility</h2>
 
@@ -64,7 +103,6 @@ const DonorDashboard = () => {
               <li>On certain medications (consult a doctor)</li>
             </ul>
 
-           
             <div className="mt-4 flex items-center">
               <input
                 type="checkbox"
@@ -78,7 +116,6 @@ const DonorDashboard = () => {
               </label>
             </div>
 
-            
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setShowCriteria(false)}

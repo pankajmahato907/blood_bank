@@ -276,6 +276,7 @@ app.get('/patients/requests', async (req, res) => {
   try {
     const patientRequests = await Patient.find().sort({ createdAt: -1 });
     res.status(200).json(patientRequests);
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching patient requests", error: error.message });

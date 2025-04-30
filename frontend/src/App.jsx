@@ -27,7 +27,6 @@ import Profile from './components/Profiles/Profile';
 import GoogleMap from './components/GoogleMap';
 import UpdatePassword from './components/UpdatePassword';
 import DonorDetail from './components/DonorDetail';
-import DonorList from './components/DonorList';
 //import { ToastContainer } from 'react-toastify';
 
 function App() {
