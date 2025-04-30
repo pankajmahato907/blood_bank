@@ -8,6 +8,7 @@ const DonorRegistration = () => {
     gender: '',
     bloodGroup: '',
     address: '',
+    email:localStorage.getItem("email")
   });
 
   const navigate = useNavigate(); 
@@ -32,6 +33,7 @@ const DonorRegistration = () => {
       const data = await response.json();
   
       if (response.ok) {
+        localStorage.setItem("bloodGroup", formData.bloodGroup);
         alert('Donor registered successfully!');
         navigate('/donordashboard'); 
       } else {

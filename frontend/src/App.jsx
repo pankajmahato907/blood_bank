@@ -25,6 +25,9 @@ import RequestList from './RequestList';
 import AllPatientRequests from './pages/donordashboard/AllPatientRequests';
 import Profile from './components/Profiles/Profile';
 import GoogleMap from './components/GoogleMap';
+import UpdatePassword from './components/UpdatePassword';
+import DonorDetail from './components/DonorDetail';
+import DonorList from './components/DonorList';
 //import { ToastContainer } from 'react-toastify';
 
 function App() {
@@ -73,6 +76,10 @@ function App() {
             <Route path="/patientrequest" element={<AllPatientRequests/>} />
             <Route path="/bloodbanks" element={<AllBloodBank  bankDetails = {bankDetails}/>} />
 
+
+            <Route path="/update-password" element={<UpdatePassword />} />
+            <Route path="/donor-detail" element={<DonorDetail/>}/>
+           
 
 
 

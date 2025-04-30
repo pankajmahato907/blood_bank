@@ -153,18 +153,47 @@ app.post('/create-admin', async (req, res) => {
     res.status(500).json({ message: 'Failed to create admin', error: error.message });
   }
 });
+// Update password route
+app.post('/update-password', async (req, res) => {
+  try {
+    const { email, currentPassword, newPassword } = req.body;
+    if (!email || !currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const user = await User.findOne({ email: email.trim().toLowerCase() });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Password update error:', error);
+    res.status(500).json({ message: 'Failed to update password', error: error.message });
+  }
+});
+
 
 
 //  Donor Registration
 
 app.post('/donors/register', async (req, res) => {
   try {
-    const { name, phone, gender, bloodGroup, address } = req.body;
-    if (!name || !phone || !gender || !bloodGroup || !address) {
+    const { name, phone, gender, bloodGroup, address,email } = req.body;
+    if (!name || !phone || !gender || !bloodGroup || !address || !email) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    const newDonor = new Donor({ name, phone, gender, bloodGroup, address });
+    const newDonor = new Donor({ name, phone, gender, bloodGroup, address,email });
     await newDonor.save();
 
     res.status(201).json({ message: "Donor registered successfully!", donor: newDonor });
@@ -173,6 +202,25 @@ app.post('/donors/register', async (req, res) => {
     res.status(500).json({ message: "Error registering donor", error: error.message });
   }
 });
+
+// Get individual donor by email
+app.get('/donors/:email', async (req, res) => {
+  try {
+    const email = req.params.email.trim().toLowerCase();
+    const donor = await Donor.findOne({ email });
+
+    if (!donor) {
+      return res.status(404).json({ message: "Donor not found" });
+    }
+
+    res.json(donor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching donor", error: error.message });
+  }
+});
+
+
 
 //  Get All Donors
 

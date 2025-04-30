@@ -5,6 +5,9 @@ const donorSchema = new mongoose.Schema({
   //   type: Schema.Types.ObjectId,
   //   ref: "User",
   // },
+  email:{
+type:String
+  },
   name: { type: String },
   phone: { type: String },
   gender: { type: String, enum: ["Male", "Female", "Other"] },
