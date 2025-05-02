@@ -80,8 +80,6 @@ function App() {
             <Route path="/donor-detail" element={<DonorDetail/>}/>
            
 
-
-
             <Route path="/request" element={<RequestList/>} />
             <Route path="/profile" element={<Profile />}/>
            

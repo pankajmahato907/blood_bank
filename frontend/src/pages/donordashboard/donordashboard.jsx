@@ -30,6 +30,9 @@ const DonorDashboard = () => {
       await axios.delete(`http://localhost:3000/donors/${email}`);
       alert("Your donor registration has been deleted.");
       setDonor(null);
+      localStorage.removeItem("bloodGroup"); // clear blood group from localStorage
+      localStorage.removeItem("email"); 
+      window.location.reload();
     } catch (err) {
       alert("Failed to delete donor registration.");
     }
@@ -57,7 +60,7 @@ const DonorDashboard = () => {
         />
       </div>
 
-      {/* ✅ Centered Grid Container */}
+      {/* Centered Grid Container */}
       <div className="max-w-6xl mx-auto w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
           <button
