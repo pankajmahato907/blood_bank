@@ -40,6 +40,7 @@ const PatientRegistration = () => {
 
       if (response.ok) {
         alert(result.message);
+        localStorage.setItem('bloodGroup', formData.bloodGroup);
         navigate('/patientdashboard');
       } else {
         alert(result.message || 'Something went wrong.');

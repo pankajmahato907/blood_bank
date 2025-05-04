@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 function isValidMobileNumber(number) {
@@ -15,27 +16,21 @@ function formatRecipients(numbers) {
   }
 }
 
-async function SmsSender(message, sender, to, token) {
+async function Sms(message, to) {
+  const token = process.env.Token;
+  const sender = process.env.Sender;
+
   try {
     const numbers = formatRecipients(to);
-    const params = new URLSearchParams({
-      token,
-      to: numbers,
-      sender,
-      message
-    });
+    const params = new URLSearchParams({ token, to: numbers, sender, message });
 
     const response = await axios.get(`http://beta.thesmscentral.com/api/v3/sms?${params.toString()}`);
-    console.log(response.data);
+    console.log('SMS sent response:', response.data);
+    return response.data;
   } catch (err) {
-    console.log("Error occurred:", err.message);
+    console.error('SMS send error:', err.message);
+    throw err;
   }
 }
 
-const sender = "BloodBank";
-const token = "p50nzAunP2QiUx3D1918BwvwnWSEULepL6sA";
-const number = '9807886763';
-const numbers = ['9807886763', "9801092670"]; 
-
-SmsSender("Hello, how are you?", sender, numbers, token);
-
+export default Sms;

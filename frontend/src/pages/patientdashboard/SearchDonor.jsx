@@ -7,13 +7,21 @@ const SearchDonor = () => {
   const [filteredDonors, setFilteredDonors] = useState([]);
 
   useEffect(() => {
-    // Fetch all donors once on mount
+    const storedBloodGroup = localStorage.getItem('bloodGroup') || '';
+    setBloodGroup(storedBloodGroup);
+
     const fetchDonors = async () => {
       try {
         const res = await fetch('http://localhost:3000/donors');
         const data = await res.json();
         setDonors(data);
-        setFilteredDonors(data); // Show all by default
+
+        // Automatically filter by stored blood group
+        const filtered = data.filter(
+          (donor) =>
+            donor.bloodGroup.toLowerCase() === storedBloodGroup.toLowerCase()
+        );
+        setFilteredDonors(filtered);
       } catch (err) {
         console.error('Failed to fetch donors:', err);
       }
@@ -32,7 +40,7 @@ const SearchDonor = () => {
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-red-600 text-center">Search Donors</h2>
-      
+
       <div className="flex flex-col md:flex-row gap-4 mb-6 justify-center">
         <input
           type="text"
@@ -40,6 +48,7 @@ const SearchDonor = () => {
           value={bloodGroup}
           onChange={(e) => setBloodGroup(e.target.value)}
           className="border p-2 rounded w-full md:w-1/3"
+          disabled // Optional: disable field if filtering from storage
         />
         <input
           type="text"

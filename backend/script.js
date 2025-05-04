@@ -10,6 +10,10 @@ import BloodBank from './model/bloodBank.js';
 import ContactMessage from './model/ContactMessage.js';
 import SendMail from './NodeMailer/SendMail.js';
 
+import Sms from './SMS/sms.js';
+import { configDotenv } from 'dotenv';
+configDotenv();
+
 
 
 const app = express();
@@ -18,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(express.json());
+
 
 
 
@@ -375,7 +380,7 @@ app.delete('/patients/:id', async (req, res) => {
   }
 });
 
-// Get all patient requests
+// Get all patient requests (Admin dashboard)
 app.get('/patients', async (req, res) => {
   try {
     const patients = await Patient.find();
@@ -383,6 +388,18 @@ app.get('/patients', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching patient requests', error: error.message });
+  }
+});
+
+// GET /patients/:email
+app.get('/patients/:email', async (req, res) => {
+  const { email } = req.params;
+  try {
+    const patient = await Patient.findOne({ email });
+    if (!patient) return res.status(404).json({ message: "Patient not found" });
+    res.json(patient);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -449,6 +466,17 @@ app.get('/search', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error searching donors', error: error.message });
+  }
+});
+//sms sender
+app.post('/send-sms', async (req, res) => {
+  const { message, to } = req.body;
+
+  try {
+    const response = await Sms(message, to);
+    res.status(200).json({ message: 'SMS sent successfully!', response });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to send SMS', error: error.message });
   }
 });
 
