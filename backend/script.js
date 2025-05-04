@@ -17,6 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+app.use(express.json());
+
 
 
 //contact us
@@ -233,6 +235,8 @@ app.get('/donors', async (req, res) => {
     res.status(500).json({ message: "Error fetching donors", error: error.message });
   }
 });
+
+// donor available xa vane , patient le donor lai request garcha ani request garya donor lai sms jane 
 
 // Get a single donor by ID
 app.get('/donors/:id', async (req, res) => {
