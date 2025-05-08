@@ -34,7 +34,7 @@ const DonorRegistration = () => {
   
       if (response.ok) {
         localStorage.setItem("bloodGroup", formData.bloodGroup);
-        alert('Donor registered successfully!');
+        localStorage.removeItem("bloodGroup");
         navigate('/donordashboard'); 
       } else {
         alert(`Error: ${data.message}`);

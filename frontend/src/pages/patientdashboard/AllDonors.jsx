@@ -19,19 +19,21 @@ const AllDonors = () => {
     }
   };
 
-  const handleSendSMS = async (phone) => {
+  const handleSendSMS = async (phone,name,blood) => {
     try {
       const res = await fetch(`http://localhost:3000/send-sms`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', 
+          
         },
         body: JSON.stringify({
           to: phone,
-          message: 'Hello Dear, You have been matched with a patient who needs your blood. Please check yr dashboard.',
+          message: `Hello ${name},A user has requested for you blood ${blood} please visit our office if you are available now. Thankyou!.`
         }),
-      });
-  
+      }); 
+      console.log(donors.name)
+      console.log(donors.bloodGroup)
       const result = await res.json();
       if (res.ok) {
         alert('SMS sent successfully!');
@@ -51,6 +53,7 @@ const AllDonors = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center text-red-600">Matching Donors</h1>
+      {console.log(donors)}
 
       {donors.length === 0 ? (
         <p className="text-center text-gray-500">No matching donors found.</p>
@@ -83,7 +86,7 @@ const AllDonors = () => {
                   </td>
                   <td className="py-2 px-4">
                     <button
-                      onClick={() => handleSendSMS(donor.phone)}
+                      onClick={() => handleSendSMS(donor.phone,donor.name,donor.bloodGroup)}
                       className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
                     >
                       Send SMS

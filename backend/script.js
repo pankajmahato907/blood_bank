@@ -196,6 +196,7 @@ app.post('/update-password', async (req, res) => {
 app.post('/donors/register', async (req, res) => {
   try {
     const { name, phone, gender, bloodGroup, address,email } = req.body;
+    console.log( name, phone, gender, bloodGroup, address,email)
     if (!name || !phone || !gender || !bloodGroup || !address || !email) {
       return res.status(400).json({ message: "All fields are required." });
     }

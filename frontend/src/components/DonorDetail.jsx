@@ -17,6 +17,7 @@ const DonorDetail = () => {
       try {
         const res = await axios.get(`http://localhost:3000/donors/${email}`);
         setDonor(res.data);
+        localStorage.setItem("bloodGroup",res?.data?.bloodGroup);
       } catch (err) {
         setError('Failed to load donor profile.');
       }
@@ -46,6 +47,7 @@ const DonorDetail = () => {
       const response = await axios.delete(`http://localhost:3000/donors/delete/${donor._id}`);
       setShowModal(false);
       navigate('/donordashboard');
+      localStorage.removeItem("bloodGroup");
     } catch (error) {
       console.error('Error deleting donor:', error);
       alert('Failed to delete donor');
@@ -62,6 +64,7 @@ const DonorDetail = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-white flex items-center justify-center p-6">
+       {console.log(donor)}
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md text-center">
         <Droplet className="text-red-600 w-10 h-10 mx-auto mb-3" />
         <h2 className="text-2xl font-bold text-red-700 mb-1">Donor Details</h2>

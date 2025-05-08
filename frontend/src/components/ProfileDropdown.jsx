@@ -19,7 +19,7 @@ const ProfileDropdown = ({ name, email, role, onClose }) => {
   const handleDashboard = () => {
     onClose();
     if (role === "admin") {
-      navigate("/adminDashboard");
+      navigate("/admin");
     } else if (role === "donor") {
       navigate("/donorDashboard");
     } else if (role === "patient") {
