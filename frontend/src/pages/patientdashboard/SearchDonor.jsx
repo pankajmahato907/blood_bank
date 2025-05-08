@@ -1,41 +1,73 @@
 import React, { useEffect, useState } from 'react';
 
 const SearchDonor = () => {
-  const [bloodGroup, setBloodGroup] = useState('');
-  const [address, setAddress] = useState('');
   const [donors, setDonors] = useState([]);
   const [filteredDonors, setFilteredDonors] = useState([]);
+  const [bloodGroup, setBloodGroup] = useState('');
+  const [address, setAddress] = useState('');
+  const [patientBloodGroup, setPatientBloodGroup] = useState(null);
+  const userId = localStorage.getItem("userId");
+
+  const fetchPatientDetails = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/patients/${userId}`);
+      const data = await res.json();
+      if (res.ok) {
+        setPatientBloodGroup(data.bloodGroup);
+        setBloodGroup(data.bloodGroup); // prefill blood group input
+      } else {
+        setPatientBloodGroup(null);
+      }
+    } catch (err) {
+      console.error('Error fetching patient details:', err);
+      setPatientBloodGroup(null);
+    }
+  };
+
+  const fetchDonors = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/donors');
+      const data = await res.json();
+      setDonors(data);
+      // initially show all matching by blood group
+      if (patientBloodGroup) {
+        const matching = data.filter(
+          (donor) => donor.bloodGroup === patientBloodGroup
+        );
+        setFilteredDonors(matching);
+      }
+    } catch (err) {
+      console.error('Failed to fetch donors', err);
+    }
+  };
 
   useEffect(() => {
-    const storedBloodGroup = localStorage.getItem('bloodGroup') || '';
-    setBloodGroup(storedBloodGroup);
-
-    const fetchDonors = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/donors');
-        const data = await res.json();
-        setDonors(data);
-
-        // Automatically filter by stored blood group
-        const filtered = data.filter(
-          (donor) =>
-            donor.bloodGroup.toLowerCase() === storedBloodGroup.toLowerCase()
-        );
-        setFilteredDonors(filtered);
-      } catch (err) {
-        console.error('Failed to fetch donors:', err);
-      }
-    };
-    fetchDonors();
+    fetchPatientDetails();
   }, []);
 
+  useEffect(() => {
+    if (patientBloodGroup) {
+      fetchDonors();
+    }
+  }, [patientBloodGroup]);
+
   const handleSearch = () => {
-    const filtered = donors.filter((donor) =>
-      donor.bloodGroup.toLowerCase().includes(bloodGroup.toLowerCase()) &&
-      donor.address.toLowerCase().includes(address.toLowerCase())
+    const filtered = donors.filter(
+      (donor) =>
+        donor.bloodGroup.toLowerCase().includes(bloodGroup.toLowerCase()) &&
+        donor.address.toLowerCase().includes(address.toLowerCase())
     );
     setFilteredDonors(filtered);
   };
+
+  if (!patientBloodGroup) {
+    return (
+      <div className="p-6 max-w-3xl mx-auto text-center">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Search Donors</h2>
+        <p className="text-gray-600">Please register as a patient to search for matching donors.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
@@ -44,11 +76,11 @@ const SearchDonor = () => {
       <div className="flex flex-col md:flex-row gap-4 mb-6 justify-center">
         <input
           type="text"
-          placeholder="Blood Group (e.g. A+)"
+          placeholder="Blood Group"
           value={bloodGroup}
           onChange={(e) => setBloodGroup(e.target.value)}
           className="border p-2 rounded w-full md:w-1/3"
-          disabled // Optional: disable field if filtering from storage
+          disabled
         />
         <input
           type="text"
@@ -78,8 +110,8 @@ const SearchDonor = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredDonors.map((donor, index) => (
-              <tr key={index} className="border-t text-center">
+            {filteredDonors.map((donor) => (
+              <tr key={donor._id} className="border-t text-center">
                 <td className="p-2 border">{donor.name}</td>
                 <td className="p-2 border">{donor.phone}</td>
                 <td className="p-2 border">{donor.gender}</td>

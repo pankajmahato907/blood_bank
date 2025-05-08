@@ -5,9 +5,15 @@ import blooddonate from '../../assets/blooddonate.png';
 import BloodBankInfo from '../../components/BloodBankInfo';
 
 const PatientDashboard = ({bankDetails}) => {
+
+  const isRegistered = localStorage.getItem("isPatientRegistered") === "true";
   const cards = [
     { title: 'Search Donor', color: 'bg-red-500', link: '/search-donor' },
-    { title: 'Request Blood', color: 'bg-blue-500', link: '/registerpatient' },
+    {
+      title: isRegistered ? 'Patient Details' : 'Request Blood',
+      color: 'bg-blue-500',
+      link: isRegistered ? '/patientdetails' : '/registerpatient'
+    },
     { title: 'All Donors', color: 'bg-green-500', link: '/donors' },
     { title: 'Blood Banks', color: 'bg-yellow-500', link: '/bloodbanks' },
   ];

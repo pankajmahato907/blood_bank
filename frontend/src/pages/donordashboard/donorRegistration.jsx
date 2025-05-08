@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import { ToastContainer , toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DonorRegistration = () => {
   const [formData, setFormData] = useState({
@@ -33,8 +35,9 @@ const DonorRegistration = () => {
       const data = await response.json();
   
       if (response.ok) {
+        toast.success(data.message || 'Patient request success');
         localStorage.setItem("bloodGroup", formData.bloodGroup);
-        localStorage.removeItem("bloodGroup");
+        //localStorage.removeItem("bloodGroup");
         navigate('/donordashboard'); 
       } else {
         alert(`Error: ${data.message}`);
@@ -146,6 +149,7 @@ const DonorRegistration = () => {
             </button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

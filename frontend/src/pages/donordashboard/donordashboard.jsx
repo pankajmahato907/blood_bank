@@ -31,7 +31,7 @@ const DonorDashboard = () => {
       alert("Your donor registration has been deleted.");
       setDonor(null);
       localStorage.removeItem("bloodGroup"); // clear blood group from localStorage
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       alert("Failed to delete donor registration.");
     }

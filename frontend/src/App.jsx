@@ -27,7 +27,8 @@ import Profile from './components/Profiles/Profile';
 import GoogleMap from './components/GoogleMap';
 import UpdatePassword from './components/UpdatePassword';
 import DonorDetail from './components/DonorDetail';
-//import { ToastContainer } from 'react-toastify';
+import PatientDetails from './components/PatientDetails';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -78,6 +79,7 @@ function App() {
 
             <Route path="/update-password" element={<UpdatePassword />} />
             <Route path="/donor-detail" element={<DonorDetail/>}/>
+            <Route path="/patientdetails" element={<PatientDetails />} />
            
 
             <Route path="/request" element={<RequestList/>} />
@@ -85,6 +87,7 @@ function App() {
            
 
           </Routes>
+          <ToastContainer position="top-right" autoClose={2000} />
         </main>
         <Footer />
       </div>

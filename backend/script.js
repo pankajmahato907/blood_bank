@@ -302,29 +302,36 @@ app.post('/patients/register', upload.single('requestForm'), async (req, res) =>
     const { _id, name, phone, bloodGroup, address, note } = req.body;
     const filePath = req.file ? req.file.path : null;
 
-    // 1. Check if _id exists in Patient collection
-    const existingPatient = await Patient.findById(_id);
+    let patient = await Patient.findById(_id);
 
-    if (!existingPatient) {
-      return res.status(404).json({ message: 'Patient ID not found. Cannot register details.' });
+    if (!patient) {
+      //  Create new patient if not found
+      patient = new Patient({
+        _id,
+        name,
+        phone,
+        bloodGroup,
+        address,
+        note,
+        requestForm: filePath,
+        confirmed: false
+      });
+    } else {
+      //  Update if already exists
+      patient.name = name;
+      patient.phone = phone;
+      patient.bloodGroup = bloodGroup;
+      patient.address = address;
+      patient.note = note;
+      if (filePath) patient.requestForm = filePath;
+      patient.confirmed = false;
     }
-
-    // 2. Update only if found
-    existingPatient.name = name;
-    existingPatient.phone = phone;
-    existingPatient.bloodGroup = bloodGroup;
-    existingPatient.address = address;
-    existingPatient.note = note;
-    if (filePath) existingPatient.requestForm = filePath;
-    existingPatient.confirmed = false;
-
-    await existingPatient.save();
-
-    res.status(200).json({ message: 'Patient details updated successfully!', patient: existingPatient });
+    await patient.save();
+    res.status(200).json({ message: 'Patient details saved successfully!', patient });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error updating patient', error: error.message });
+    res.status(500).json({ message: 'Error saving patient', error: error.message });
   }
 });
 
@@ -367,7 +374,7 @@ app.put('/patients/:id', async (req, res) => {
 });
 
 
-//  Delete Patient Request
+//  Delete Patient Request from admin side
 
 app.delete('/patients/:id', async (req, res) => {
   try {
@@ -380,6 +387,22 @@ app.delete('/patients/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting patient', error: error.message });
   }
 });
+
+//Delete patient request from Patient Dashboard details button click
+// router.delete('/patients/:id', async (req, res) => {
+//   try {
+//     const deletedPatient = await Patient.findByIdAndDelete(req.params.id);
+
+//     if (!deletedPatient) {
+//       return res.status(404).json({ message: 'Patient not found' });
+//     }
+
+//     res.json({ message: 'Patient request deleted successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Server error while deleting patient' });
+//   }
+// });
 
 // Get all patient requests (Admin dashboard)
 app.get('/patients', async (req, res) => {

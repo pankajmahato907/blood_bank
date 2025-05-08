@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const PatientRegistration = () => {
   const [formData, setFormData] = useState({
@@ -39,8 +40,9 @@ const PatientRegistration = () => {
       const result = await response.json();
 
       if (response.ok) {
-        alert(result.message);
+        toast.success(data.message || 'Patient request success');
         localStorage.setItem('bloodGroup', formData.bloodGroup);
+        localStorage.setItem("isPatientRegistered", "true");
         navigate('/patientdashboard');
       } else {
         alert(result.message || 'Something went wrong.');

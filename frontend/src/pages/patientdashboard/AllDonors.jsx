@@ -2,38 +2,53 @@ import React, { useEffect, useState } from 'react';
 
 const AllDonors = () => {
   const [donors, setDonors] = useState([]);
-  const patientBloodGroup = localStorage.getItem('bloodGroup');
+  const [patientBloodGroup, setPatientBloodGroup] = useState(null);
+  const userId = localStorage.getItem("userId");
+
+  // Fetch patient blood group dynamically from backend
+  const fetchPatientDetails = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/patients/${userId}`);
+      const data = await res.json();
+      if (res.ok) {
+        setPatientBloodGroup(data.bloodGroup);
+      } else {
+        setPatientBloodGroup(null);
+      }
+    } catch (err) {
+      console.error('Error fetching patient details:', err);
+      setPatientBloodGroup(null);
+    }
+  };
 
   const fetchDonors = async () => {
     try {
       const res = await fetch('http://localhost:3000/donors');
       const data = await res.json();
-
-      const filteredDonors = data.filter(
-        (donor) => donor.bloodGroup === patientBloodGroup
-      );
-
-      setDonors(filteredDonors);
+      setDonors(data);
     } catch (err) {
       console.error('Failed to fetch donors', err);
     }
   };
 
-  const handleSendSMS = async (phone,name,blood) => {
+  useEffect(() => {
+    fetchPatientDetails();
+    fetchDonors();
+  }, []);
+
+  const handleSendSMS = async (phone, name, blood) => {
     try {
       const res = await fetch(`http://localhost:3000/send-sms`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', 
-          
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           to: phone,
-          message: `Hello ${name},A user has requested for you blood ${blood} please visit our office if you are available now. Thankyou!.`
+          message: `Hello ${name}, A user has requested for your blood group ${blood}. Please visit our office if you're available. Thank you!`,
         }),
-      }); 
-      console.log(donors.name)
-      console.log(donors.bloodGroup)
+      });
+
       const result = await res.json();
       if (res.ok) {
         alert('SMS sent successfully!');
@@ -45,17 +60,19 @@ const AllDonors = () => {
       alert('Failed to send SMS');
     }
   };
-  
-  useEffect(() => {
-    fetchDonors();
-  }, []);
+
+  // Filter donors after patientBloodGroup is available
+  const matchingDonors = patientBloodGroup
+    ? donors.filter((donor) => donor.bloodGroup === patientBloodGroup)
+    : [];
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center text-red-600">Matching Donors</h1>
-      {console.log(donors)}
 
-      {donors.length === 0 ? (
+      {patientBloodGroup === null ? (
+        <p className="text-center text-gray-500">Please register as a patient to view matching donors.</p>
+      ) : matchingDonors.length === 0 ? (
         <p className="text-center text-gray-500">No matching donors found.</p>
       ) : (
         <div className="overflow-x-auto">
@@ -72,7 +89,7 @@ const AllDonors = () => {
               </tr>
             </thead>
             <tbody>
-              {donors.map((donor) => (
+              {matchingDonors.map((donor) => (
                 <tr key={donor._id} className="text-center border-b hover:bg-gray-100">
                   <td className="py-2 px-4">{donor.name}</td>
                   <td className="py-2 px-4">{donor.phone}</td>
@@ -86,7 +103,7 @@ const AllDonors = () => {
                   </td>
                   <td className="py-2 px-4">
                     <button
-                      onClick={() => handleSendSMS(donor.phone,donor.name,donor.bloodGroup)}
+                      onClick={() => handleSendSMS(donor.phone, donor.name, donor.bloodGroup)}
                       className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
                     >
                       Send SMS
