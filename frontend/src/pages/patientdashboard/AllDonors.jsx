@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const AllDonors = () => {
   const [donors, setDonors] = useState([]);
@@ -51,13 +52,13 @@ const AllDonors = () => {
 
       const result = await res.json();
       if (res.ok) {
-        alert('SMS sent successfully!');
+        toast('SMS sent successfully!');
       } else {
-        alert(`Failed to send SMS: ${result.message}`);
+        toast(`Failed to send SMS: ${result.message}`);
       }
     } catch (err) {
       console.error('Error sending SMS:', err);
-      alert('Failed to send SMS');
+      toast('Failed to send SMS');
     }
   };
 

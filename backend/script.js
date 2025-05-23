@@ -56,7 +56,7 @@ app.post('/contact', async (req, res) => {
 });
 
 
-//  Login Route
+//  Login 
 
 app.post('/login', async (req, res) => {
   try {
@@ -354,6 +354,8 @@ app.get('/patients/:id', async (req, res) => {
 });
 
 
+
+
 //  Update Patient Info / Confirm Request
 
 app.put('/patients/:id', async (req, res) => {
@@ -387,6 +389,19 @@ app.delete('/patients/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting patient', error: error.message });
   }
 });
+
+
+// Route to get latest 5 requests
+app.get('/api/blood-requests/latest', async (req, res) => {
+  try {
+    const latestRequests = await Patient.find().sort({ _id: -1 }).limit(5); 
+    res.json(latestRequests);
+  } catch (err) {
+    console.error("Error fetching latest requests:", err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 //Delete patient request from Patient Dashboard details button click
 // router.delete('/patients/:id', async (req, res) => {

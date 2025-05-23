@@ -16,7 +16,8 @@ const patientSchema = new mongoose.Schema({
     type: Boolean,
     default: false, // Admin will update this to true
   },
-});
+},
+);
 
 const Patient = mongoose.model('Patient', patientSchema);
 

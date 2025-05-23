@@ -19,12 +19,24 @@ const PatientRegistration = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setFormData({ ...formData, phone: value });
+    }
+  };
+
   const handleFileChange = (e) => {
     setFormData({ ...formData, requestForm: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!/^\d{10}$/.test(formData.phone)) {
+      toast.error('Phone number must be exactly 10 digits');
+      return;
+    }
 
     try {
       const data = new FormData();
@@ -40,7 +52,7 @@ const PatientRegistration = () => {
       const result = await response.json();
 
       if (response.ok) {
-        toast.success(data.message || 'Patient request success');
+        toast.success(result.message || 'Patient request success');
         localStorage.setItem('bloodGroup', formData.bloodGroup);
         localStorage.setItem("isPatientRegistered", "true");
         navigate('/patientdashboard');
@@ -68,15 +80,18 @@ const PatientRegistration = () => {
             className="w-full px-4 py-2 bg-gray-200 rounded-md"
             required
           />
+
           <input
             type="tel"
             name="phone"
             placeholder="Phone Number"
             value={formData.phone}
-            onChange={handleChange}
+            onChange={handlePhoneChange}
             className="w-full px-4 py-2 bg-gray-200 rounded-md"
+            maxLength="10"
             required
           />
+
           <select
             name="bloodGroup"
             value={formData.bloodGroup}
@@ -90,6 +105,7 @@ const PatientRegistration = () => {
             <option>AB+</option><option>AB-</option>
             <option>O+</option><option>O-</option>
           </select>
+
           <input
             type="file"
             name="requestForm"
@@ -98,6 +114,7 @@ const PatientRegistration = () => {
             accept="image/*,.pdf"
             required
           />
+
           <input
             type="text"
             name="address"
@@ -107,6 +124,7 @@ const PatientRegistration = () => {
             className="w-full px-4 py-2 bg-gray-200 rounded-md"
             required
           />
+
           <textarea
             name="note"
             placeholder="Leave a Note or Message"
@@ -115,12 +133,14 @@ const PatientRegistration = () => {
             className="w-full px-4 py-2 bg-gray-200 rounded-md"
             rows="3"
           />
+
           <button
             type="submit"
             className="w-full bg-red-600 text-white py-2 rounded-md font-semibold hover:bg-red-700"
           >
             Submit
           </button>
+
           <button
             type="button"
             onClick={() => navigate('/patientdashboard')}
